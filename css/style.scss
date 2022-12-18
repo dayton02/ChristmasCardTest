@@ -1,0 +1,129 @@
+body{
+
+    height: 100vh;
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    overflow: hidden;
+    filter: drop-shadow(0 0 10px white);
+}
+.stack-top{
+    z-index: 9;
+}
+
+@function random_range($min, $max) {
+    $rand: random();
+    $random_range: $min + floor($rand * (($max - $min) + 1));
+    @return $random_range;
+  }
+  
+  .snow {
+    $total: 200;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+  
+    @for $i from 1 through $total {
+      $random-x: random(1000000) * 0.0001vw;
+      $random-offset: random_range(-100000, 100000) * 0.0001vw;
+      $random-x-end: $random-x + $random-offset;
+      $random-x-end-yoyo: $random-x + ($random-offset / 2);
+      $random-yoyo-time: random_range(30000, 80000) / 100000;
+      $random-yoyo-y: $random-yoyo-time * 100vh;
+      $random-scale: random(10000) * 0.0001;
+      $fall-duration: random_range(10, 30) * 1s;
+      $fall-delay: random(30) * -1s;
+  
+      &:nth-child(#{$i}) {
+        opacity: random(10000) * 0.0001;
+        transform: translate($random-x, -10px) scale($random-scale);
+        animation: fall-#{$i} $fall-duration $fall-delay linear infinite;
+      }
+  
+      @keyframes fall-#{$i} {
+        #{percentage($random-yoyo-time)} {
+          transform: translate($random-x-end, $random-yoyo-y) scale($random-scale);
+        }
+  
+        to {
+          transform: translate($random-x-end-yoyo, 100vh) scale($random-scale);
+        }
+      }
+    }
+  }
+  
+
+.card{
+    top: 25%;
+    left: 45%;
+    margin: auto;
+    position: absolute;
+    width: 250px;
+    height: 350px;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transform: perspective(2500px);
+    transition: 1s;
+}
+
+.card:hover{
+    transform: perspective(2500px) rotate(5deg);
+    box-shadow: inset 100px 20px 100px rgba(0,0,0,0.2),0 10px 100px rgba(0,0,0,0.4);
+}
+.card:hover .cardfront{
+    transform:rotateY(-160deg);
+}
+.card:hover .merry{
+    visibility: hidden;
+}
+
+.cardfront{
+    position: relative;
+    background-color: #e8ffe8;
+    width: 250px;
+    height:350px;
+    overflow: hidden;
+    transform-origin: left;
+    box-shadow: inset 100px 20px 100px rgba(0,0,0,0.2),30px 0 50px rgba(0,0,0,0.4);
+    transition: 0.6s;
+}
+.merry{
+    font-family: arial;
+    text-align: center;
+    margin: 30px;
+    letter-spacing: 6px;
+    font-size: 1.2em;
+    color: #80aa80;
+    text-transform: uppercase;
+    -webkit-box-reflect: below 0.5px linear-gradient(transparent, #0004);
+    line-height: 1em;
+    transition: 0.1s;
+}
+.cardinside{
+    position: absolute;
+    background-color: #e8ffe8;
+    top:0;
+    left:0;
+    width: 250px;
+    height: 350px;
+    box-shadow: inset 100px 20px 100px rgba(0,0,0,0.2);
+    z-index: -1;
+}
+p{
+    margin: 40px;
+    color: #333;
+}
+.name{
+    position: absolute;
+    left:150px;
+    top: 250px;
+    color: #333;
+}
+.back{
+    color: #80aa80;
+    text-align: center;
+    margin: 30px;
+    outline-color: #333;
+    outline-style: dotted;
+}
+
